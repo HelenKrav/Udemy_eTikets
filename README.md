@@ -1,1 +1,1 @@
-Udemy_eTikets
+Udemy_eTikets is application with ASP.NET MVC and Entity Framework Core. 
