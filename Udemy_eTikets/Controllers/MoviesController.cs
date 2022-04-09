@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading.Tasks;
 using Udemy_eTikets.Data;
 
@@ -15,7 +16,7 @@ namespace Udemy_eTikets.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var allMovies = await _appDbContext.Movies.ToListAsync();
+            var allMovies = await _appDbContext.Movies.Include(c=>c.Cinema).OrderBy(n=>n.Name).ToListAsync();
 
             return View(allMovies);
         }
