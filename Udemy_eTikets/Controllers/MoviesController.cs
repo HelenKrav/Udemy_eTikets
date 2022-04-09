@@ -17,7 +17,7 @@ namespace Udemy_eTikets.Controllers
         {
             var allMovies = await _appDbContext.Movies.ToListAsync();
 
-            return View();
+            return View(allMovies);
         }
     }
 }

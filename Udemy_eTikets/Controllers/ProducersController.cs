@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading.Tasks;
 using Udemy_eTikets.Data;
 
@@ -15,9 +16,9 @@ namespace Udemy_eTikets.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var allProducers = await _appDbContext.Producers.ToListAsync();
+            var allProducers = await _appDbContext.Producers.OrderBy(p=>p.FullName).ToListAsync();
 
-            return View();
+            return View(allProducers);
         }
     }
 }

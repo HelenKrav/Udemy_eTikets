@@ -11,12 +11,17 @@ namespace Udemy_eTikets.Models
         [Key]
         public int Id { get; set; }
 
+        [Display(Name ="Movie Name")]
         public string Name { get; set; }
+
+        [Display(Name = "Description")]
         public string Description { get; set; }
         public double Price { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public MovieCategory MovieCategory { get; set; }
+
+        [Display(Name ="Movie Image")]
         public string ImageURL { get; set; }
 
 

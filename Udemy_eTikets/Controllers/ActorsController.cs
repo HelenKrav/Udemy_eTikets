@@ -17,9 +17,9 @@ namespace Udemy_eTikets.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var allActors = await _appDbContext.Actors.ToListAsync();
+            var allActors = await _appDbContext.Actors.OrderBy(a=>a.FullName).ToListAsync();
 
-            return View();
+            return View(allActors);
         }
     }
 }
