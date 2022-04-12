@@ -17,7 +17,8 @@ namespace Udemy_eTikets.Data.Services
 
         public void Add(Actor actor)
         {
-            throw new System.NotImplementedException();
+            _appDbContext.Actors.Add(actor);
+            _appDbContext.SaveChanges();
         }
 
         public void Delete(int id)

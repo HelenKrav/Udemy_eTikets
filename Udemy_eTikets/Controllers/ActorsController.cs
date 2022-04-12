@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Udemy_eTikets.Data;
 using Udemy_eTikets.Data.Services;
+using Udemy_eTikets.Models;
 
 namespace Udemy_eTikets.Controllers
 {
@@ -24,9 +25,21 @@ namespace Udemy_eTikets.Controllers
         }
 
         //Get  Actors/Create
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([Bind("ProfilePictureURL, FullName, Bio")] Actor actor) 
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(actor);
+            }
+            _service.Add(actor);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
