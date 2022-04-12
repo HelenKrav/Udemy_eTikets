@@ -3,21 +3,22 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using Udemy_eTikets.Data;
+using Udemy_eTikets.Data.Services;
 
 namespace Udemy_eTikets.Controllers
 {
     public class ActorsController : Controller
     {
 
-        private readonly AppDbContext _appDbContext;
+        private readonly IActorService _service;
 
-        public ActorsController(AppDbContext appDbContext)
+        public ActorsController(IActorService service)
         {
-            _appDbContext = appDbContext;
+            _service = service;
         }
         public async Task<IActionResult> Index()
         {
-            var allActors = await _appDbContext.Actors.OrderBy(a=>a.FullName).ToListAsync();
+            var allActors = await _service.GetAll();
 
             return View(allActors);
         }

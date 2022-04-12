@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Udemy_eTikets.Data;
+using Udemy_eTikets.Data.Services;
 
 namespace Udemy_eTikets
 {
@@ -29,6 +30,11 @@ namespace Udemy_eTikets
             //DbContext Configuration
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")));
+
+
+            //services
+            services.AddScoped<IActorService, ActorService>();
+
 
             services.AddControllersWithViews();
         }
