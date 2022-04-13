@@ -15,10 +15,10 @@ namespace Udemy_eTikets.Data.Services
         }
 
 
-        public void Add(Actor actor)
+        public async Task  AddAsync(Actor actor)
         {
-            _appDbContext.Actors.Add(actor);
-            _appDbContext.SaveChanges();
+           await _appDbContext.Actors.AddAsync(actor);
+           await _appDbContext.SaveChangesAsync();
         }
 
         public void Delete(int id)
@@ -26,14 +26,15 @@ namespace Udemy_eTikets.Data.Services
             throw new System.NotImplementedException();
         }
 
-        public async Task<IEnumerable<Actor>> GetAll()
+        public async Task<IEnumerable<Actor>> GetAllAsync()
         {
             return await _appDbContext.Actors.ToListAsync();
         }
 
-        public Actor GetById(int id)
+        public async Task<Actor> GetByIdAsync(int id)
         {
-            throw new System.NotImplementedException();
+            var result = await  _appDbContext.Actors.FirstOrDefaultAsync(a=>a.Id == id);
+            return result;
         }
 
         public void Update(int id, Actor actor)

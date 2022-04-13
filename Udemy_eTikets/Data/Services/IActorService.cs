@@ -6,10 +6,10 @@ namespace Udemy_eTikets.Data.Services
 {
     public interface IActorService
     {
-        Task<IEnumerable<Actor>> GetAll();
-        Actor GetById(int id);
+        Task<IEnumerable<Actor>> GetAllAsync();
+        Task<Actor> GetByIdAsync(int id);
 
-        void Add(Actor actor);
+        Task AddAsync(Actor actor);
         void Update(int id, Actor actor);
         void Delete(int id);
 
