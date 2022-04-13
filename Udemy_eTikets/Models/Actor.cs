@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Udemy_eTikets.Data.Base;
 
 namespace Udemy_eTikets.Models
 {
-    public class Actor
+    public class Actor: IEntityBase
     {
         [Key]
         public int Id { get; set; }
