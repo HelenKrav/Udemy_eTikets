@@ -10,7 +10,7 @@ namespace Udemy_eTikets.Data.Services
         Task<Actor> GetByIdAsync(int id);
 
         Task AddAsync(Actor actor);
-        void Update(int id, Actor actor);
+        Task<Actor> UpdateAsync(int id, Actor actor);
         void Delete(int id);
 
     }

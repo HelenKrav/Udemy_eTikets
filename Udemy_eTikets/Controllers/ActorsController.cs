@@ -31,8 +31,8 @@ namespace Udemy_eTikets.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create([Bind("ProfilePictureURL, FullName, Bio")] Actor actor) 
+        [HttpPost]  // Атрибут Bind позволяет установить выборочную привязку отдельных значений.
+        public async Task<IActionResult> Create([Bind("ProfilePictureURL, FullName, Bio")] Actor actor) //[Bind("ProfilePictureURL, FullName, Bio")]
         {
             if(!ModelState.IsValid)
             {
@@ -54,6 +54,32 @@ namespace Udemy_eTikets.Controllers
                 return View("Empty");
             }
             return View(actorDetails);
+        }
+
+
+
+        //Get  Actors/Edit
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var actorDetails = await _service.GetByIdAsync(id);
+            if (actorDetails == null)
+            {
+                return View("Empty");
+            }
+
+            return View(actorDetails);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, [Bind("Id, ProfilePictureURL, FullName, Bio")] Actor actor)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(actor);
+            }
+            await _service.UpdateAsync(id, actor);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

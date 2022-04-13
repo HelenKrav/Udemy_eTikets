@@ -37,9 +37,12 @@ namespace Udemy_eTikets.Data.Services
             return result;
         }
 
-        public void Update(int id, Actor actor)
+        public async Task<Actor> UpdateAsync(int id, Actor newActor)
         {
-            throw new System.NotImplementedException();
+            _appDbContext.Update(newActor);
+            await _appDbContext.SaveChangesAsync();
+
+            return newActor;
         }
     }
 }
