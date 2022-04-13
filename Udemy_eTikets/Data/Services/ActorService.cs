@@ -21,9 +21,11 @@ namespace Udemy_eTikets.Data.Services
            await _appDbContext.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new System.NotImplementedException();
+            var result = await _appDbContext.Actors.FirstOrDefaultAsync(a => a.Id == id);
+            _appDbContext.Actors.Remove(result);
+            await _appDbContext.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Actor>> GetAllAsync()
