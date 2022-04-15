@@ -37,6 +37,8 @@ namespace Udemy_eTikets
 
             services.AddScoped<IProducerService, ProducerService>();
 
+            services.AddScoped<ICinemaService, CinemaService>();
+
 
             services.AddControllersWithViews();
         }
