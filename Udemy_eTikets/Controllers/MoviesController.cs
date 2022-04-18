@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,5 +32,19 @@ namespace Udemy_eTikets.Controllers
             return View(movieDetails);
         }
 
+        //Movies/Create
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            var movieDropsdownsData = await _service.GetNewMovieDropdownValues();
+
+            ViewBag.Cinemas = new SelectList(movieDropsdownsData.Cinemas, "Id", "Name");
+
+            ViewBag.Producers = new SelectList(movieDropsdownsData.Producers, "Id", "FullName");
+
+            ViewBag.Actors = new SelectList(movieDropsdownsData.Actors, "Id", "FullName");
+
+            return View();
+        }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading.Tasks;
 using Udemy_eTikets.Data.Base;
+using Udemy_eTikets.Data.ViewModels;
 using Udemy_eTikets.Models;
 
 namespace Udemy_eTikets.Data.Services
@@ -26,6 +28,16 @@ namespace Udemy_eTikets.Data.Services
                                                             .FirstOrDefaultAsync(n=>n.Id == id);
 
             return await movieDetails;
+        }
+
+        public async Task<NewMovieDropdownVM> GetNewMovieDropdownValues()
+        {
+            var response = new NewMovieDropdownVM();
+            response.Actors = await _appDbContext.Actors.OrderBy(n=>n.FullName).ToListAsync();
+            response.Cinemas = await _appDbContext.Cinemas.OrderBy(c => c.Name).ToListAsync();
+            response.Producers = await _appDbContext.Producers.OrderBy(n => n.FullName).ToListAsync();
+
+            return response;
         }
     }
 }
