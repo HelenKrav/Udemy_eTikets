@@ -18,6 +18,36 @@ namespace Udemy_eTikets.Data.Services
                 _appDbContext = appDbContext;
         }
 
+        public async Task AddNewMovieAsync(NewMovieVM data)
+        {
+            var newMovie = new Movie();
+            newMovie.Name = data.Name;
+            newMovie.Description = data.Description;
+            newMovie.StartDate = data.StartDate;
+            newMovie.EndDate = data.EndDate;
+            newMovie.ImageURL = data.ImageURL;
+            newMovie.CinemaId = data.CinemaId;
+            newMovie.ProducerId = data.ProducerId;
+            newMovie.MovieCategory = data.MovieCategory;
+            newMovie.Price = data.Price;
+
+            await _appDbContext.Movies.AddAsync(newMovie);
+            await _appDbContext.SaveChangesAsync();
+
+
+
+            foreach (var actorId in data.ActorIds)
+            {
+                var newActorMovie = new Actor_Movie();
+                newActorMovie.MovieId = newMovie.Id;
+                newActorMovie.ActorId = actorId;
+
+                await _appDbContext.Actors_Movies.AddAsync(newActorMovie);
+            }
+            await _appDbContext.SaveChangesAsync();
+
+        }
+
         public async Task<Movie> GetMovieByIdAsync(int id)
         {
             var movieDetails = _appDbContext.Movies

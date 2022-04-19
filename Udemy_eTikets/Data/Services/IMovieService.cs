@@ -10,5 +10,7 @@ namespace Udemy_eTikets.Data.Services
         Task<Movie> GetMovieByIdAsync(int id);
 
         Task<NewMovieDropdownVM> GetNewMovieDropdownValues();
+
+        Task AddNewMovieAsync(NewMovieVM data);
     }
 }
