@@ -25,6 +25,22 @@ namespace Udemy_eTikets.Controllers
         }
 
 
+        public async Task<IActionResult> Filter(string searchString)
+        {
+            var allMovies = await _service.GetAllAsync(m => m.Cinema);
+
+            if(!string.IsNullOrEmpty(searchString))
+            {
+                var filtereResult = allMovies.Where(n=>n.Name.Contains(searchString) || n.Description.Contains(searchString)).ToList();
+                return View("Index", filtereResult);
+            }
+
+            return View("Index",allMovies);
+        }
+
+
+
+
         //Get   Movies/Details/Id
         [HttpGet]
         public async Task<IActionResult> Details(int id)
