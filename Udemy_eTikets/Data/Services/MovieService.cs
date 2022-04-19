@@ -69,5 +69,44 @@ namespace Udemy_eTikets.Data.Services
 
             return response;
         }
+
+        public async Task UpdateNewMovieAsync(NewMovieVM data)
+        {
+            var dbMovie = await _appDbContext.Movies.FirstOrDefaultAsync(i=>i.Id == data.Id);
+
+            if (dbMovie != null)
+            {
+                dbMovie.Name = data.Name;
+                dbMovie.Description = data.Description;
+                dbMovie.StartDate = data.StartDate;
+                dbMovie.EndDate = data.EndDate;
+                dbMovie.ImageURL = data.ImageURL;
+                dbMovie.CinemaId = data.CinemaId;
+                dbMovie.ProducerId = data.ProducerId;
+                dbMovie.MovieCategory = data.MovieCategory;
+                dbMovie.Price = data.Price;
+
+                await _appDbContext.SaveChangesAsync();
+            }
+
+
+            //remove existing actors
+            var existingActorsDb = _appDbContext.Actors_Movies.Where(a=>a.MovieId==data.Id).ToList();
+            _appDbContext.Actors_Movies.RemoveRange(existingActorsDb);
+            await _appDbContext.SaveChangesAsync();
+
+
+            //add new actors
+            foreach (var actorId in data.ActorIds)
+            {
+                var newActorMovie = new Actor_Movie();
+                newActorMovie.MovieId = data.Id;
+                newActorMovie.ActorId = actorId;
+
+                await _appDbContext.Actors_Movies.AddAsync(newActorMovie);
+            }
+            await _appDbContext.SaveChangesAsync();
+
+        }
     }
 }

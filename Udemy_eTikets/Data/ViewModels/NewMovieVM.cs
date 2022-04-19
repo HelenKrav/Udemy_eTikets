@@ -11,6 +11,8 @@ namespace Udemy_eTikets.Models
     public class NewMovieVM
     {
 
+        public int Id { get; set; }
+
 
         [Display(Name = "Movie name")]
         [Required(ErrorMessage ="Name is required")]
@@ -20,7 +22,7 @@ namespace Udemy_eTikets.Models
         [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; }
 
-        [Display(Name="Price in Blr")]
+        [Display(Name="Price in Br")]
         [Required(ErrorMessage = "Price is required")]
         public double Price { get; set; }
 
