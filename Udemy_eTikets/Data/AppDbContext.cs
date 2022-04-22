@@ -26,25 +26,7 @@ namespace Udemy_eTikets.Data
             modelBuilder.Entity<Actor_Movie>().HasOne(a => a.Actor)
                 .WithMany(a => a.Actors_Movies)
                 .HasForeignKey(am => am.ActorId);
-
-           
-            
-            
-            //modelBuilder.Entity<Movie>().HasKey(m => new
-            //{
-            //    m.CinemaId,
-            //    m.ProducerId
-            //});
-
-            //modelBuilder.Entity<Movie>().HasOne(p=>p.Producer)
-            //                            .WithMany(m=>m.Movies)
-            //                            .HasForeignKey(m=>m.ProducerId);
-
-            //modelBuilder.Entity<Movie>().HasOne(c=>c.Cinema)
-            //                            .WithMany(m=>m.Movies)
-            //                            .HasForeignKey(m=>m.CinemaId);
-
-            
+          
             
             base.OnModelCreating(modelBuilder);
         }
@@ -55,5 +37,10 @@ namespace Udemy_eTikets.Data
         public DbSet<Cinema> Cinemas { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Actor_Movie> Actors_Movies { get; set; }
+
+
+
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
     }
 }
