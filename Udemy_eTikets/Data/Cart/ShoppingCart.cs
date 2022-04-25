@@ -38,7 +38,7 @@ namespace Udemy_eTikets.Data.Cart
         }
 
 
-        public void AddItemCart(Movie movie)
+        public void AddItemToCart(Movie movie)
         {
             var shoppingCartItem = _context.ShoppingCartItems
                     .FirstOrDefault(n => n.Movie.Id == movie.Id && n.ShoppingCartId == ShoppingCartId);
@@ -61,7 +61,7 @@ namespace Udemy_eTikets.Data.Cart
         }
 
 
-        public void DeletItemCart(Movie movie)
+        public void RemoveItemFromCart(Movie movie)
         {
             var shoppingCartItem = _context.ShoppingCartItems
                    .FirstOrDefault(n => n.Movie.Id == movie.Id && n.ShoppingCartId == ShoppingCartId);
