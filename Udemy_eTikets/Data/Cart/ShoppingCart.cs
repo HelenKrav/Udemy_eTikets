@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Udemy_eTikets.Models;
@@ -17,6 +20,23 @@ namespace Udemy_eTikets.Data.Cart
         {
             _context = context;
         }
+
+
+
+        //
+        public static ShoppingCart GetShoppingCart(IServiceProvider services)   // IServiceProvider - Определяет механизм получения сервисного объекта; то есть объекта, который обеспечивает пользовательскую поддержку других объектов.
+        {
+            ISession session = services.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Session;  //хранит данные пользователя, пока тот просматривает веб-приложение. Состояние сеанса использует хранилище, поддерживаемое приложением, для сохранения данных во время запросов от клиента. Данные сессии поддерживаются кэшем и считаются эфемерными данными.
+            var context = services.GetService<AppDbContext>();
+
+            string cartId = session.GetString("CartId") ?? Guid.NewGuid().ToString();
+
+            session.SetString("CartId", cartId);
+
+            return new ShoppingCart(context) { ShoppingCartId = cartId };
+
+        }
+
 
         public void AddItemCart(Movie movie)
         {
@@ -69,7 +89,7 @@ namespace Udemy_eTikets.Data.Cart
         }
 
 
-        public double GetShoppingCartItem()
+        public double GetShoppingCartTotal()
         {
             var total = _context.ShoppingCartItems
                 .Where(n=>n.ShoppingCartId == ShoppingCartId)
