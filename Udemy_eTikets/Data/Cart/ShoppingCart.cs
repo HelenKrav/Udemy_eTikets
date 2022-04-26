@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Udemy_eTikets.Models;
 
 namespace Udemy_eTikets.Data.Cart
@@ -97,6 +98,19 @@ namespace Udemy_eTikets.Data.Cart
                 .Sum();
 
             return total;
+        }
+
+
+
+        public async Task ClearShoppingCartAsync()
+        {
+            var items = await _context.ShoppingCartItems
+                .Where(x => x.ShoppingCartId == ShoppingCartId)
+                .ToListAsync();
+
+            _context.ShoppingCartItems.RemoveRange(items);
+
+            await _context.SaveChangesAsync();
         }
 
     }
