@@ -361,8 +361,6 @@ namespace Udemy_eTikets.Data
                     };
 
                     await userManager.CreateAsync(newAdminUser, "Qwertydzen13");
-                    var pass = newAdminUser.PasswordHash;
-                    var users = UserRoles.Admin;
                     await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
                 }
 
