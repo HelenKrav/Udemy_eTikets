@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Udemy_eTikets.Models;
 
 namespace Udemy_eTikets.Data
 {
-    public class AppDbContext: DbContext
+    public class AppDbContext: IdentityDbContext<ApplicationUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options): base(options)  //предполагает передачу в конструктор базового класса объекта DbContextOptions, который инкапсулирует параметры конфигурации.
         {

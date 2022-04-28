@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +15,7 @@ using System.Threading.Tasks;
 using Udemy_eTikets.Data;
 using Udemy_eTikets.Data.Cart;
 using Udemy_eTikets.Data.Services;
+using Udemy_eTikets.Models;
 
 namespace Udemy_eTikets
 {
@@ -50,8 +53,25 @@ namespace Udemy_eTikets
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped(sc => ShoppingCart.GetShoppingCart(sc));
 
+            //Authentication and authorization
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
 
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 5;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            });
+
+
+            services.AddMemoryCache();
             services.AddSession();
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            });
 
 
             services.AddControllersWithViews();
@@ -76,6 +96,11 @@ namespace Udemy_eTikets
             app.UseRouting();
             app.UseSession();
 
+            //Authentication and authorization
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -89,6 +114,7 @@ namespace Udemy_eTikets
             //seedapp
 
             AppDbInitializer.Seed(app);
+            AppDbInitializer.SeedUsersAndRolesAsync(app).Wait();
         }
     }
 }
